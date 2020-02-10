@@ -1,10 +1,8 @@
-require("dotenv").config();
-
 import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
 
-var socket = require("socket.io-client")(process.env.CHATROOM_SERVER);
+var socket = require("socket.io-client")(process.env.REACT_APP_CHATROOM_SERVER_URL);
 socket.on("connect", function() {
   console.log("connected to server");
 });
