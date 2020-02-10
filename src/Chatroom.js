@@ -35,6 +35,8 @@ class Chatroom extends Component {
     }
 
     handleSendMessage(e) {
+        console.log("invoke handle send message");
+
         e.preventDefault();
 
         if (this.state.inputMessage)
@@ -52,11 +54,84 @@ class Chatroom extends Component {
 
         return (
             <div className="App">
-                <div>
-                    <ul id="receivedMessages">{rows}</ul>
-
-                    <input id="inputMessage" name="inputMessage" className="form-control" autoComplete="off" onChange={this.handleOnChange} required />
-                    <button onClick={this.handleSendMessage} className="btn btn-primary">Send</button>
+                <div className="container">
+                    <div className="row">
+                        <div className="col-md-5">
+                            <div className="panel panel-primary">
+                                <div className="panel-body">
+                                    <ul className="chat">
+                                        <li className="left clearfix"><span className="chat-img pull-left">
+                                            <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" className="img-circle" />
+                                        </span>
+                                            <div className="chat-body clearfix">
+                                                <div className="header">
+                                                    <strong className="primary-font">Jack Sparrow</strong> <small className="pull-right text-muted">
+                                                        <span className="glyphicon glyphicon-time"></span>12 mins ago</small>
+                                                </div>
+                                                <p>
+                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
+                                                    dolor, quis ullamcorper ligula sodales.
+                                </p>
+                                            </div>
+                                        </li>
+                                        <li className="right clearfix"><span className="chat-img pull-right">
+                                            <img src="http://placehold.it/50/FA6F57/fff&text=ME" alt="User Avatar" className="img-circle" />
+                                        </span>
+                                            <div className="chat-body clearfix">
+                                                <div className="header">
+                                                    <small className=" text-muted"><span className="glyphicon glyphicon-time"></span>13 mins ago</small>
+                                                    <strong className="pull-right primary-font">Bhaumik Patel</strong>
+                                                </div>
+                                                <p>
+                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
+                                                    dolor, quis ullamcorper ligula sodales.
+                                </p>
+                                            </div>
+                                        </li>
+                                        <li className="left clearfix"><span className="chat-img pull-left">
+                                            <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" className="img-circle" />
+                                        </span>
+                                            <div className="chat-body clearfix">
+                                                <div className="header">
+                                                    <strong className="primary-font">Jack Sparrow</strong> <small className="pull-right text-muted">
+                                                        <span className="glyphicon glyphicon-time"></span>14 mins ago</small>
+                                                </div>
+                                                <p>
+                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
+                                                    dolor, quis ullamcorper ligula sodales.
+                                </p>
+                                            </div>
+                                        </li>
+                                        <li className="right clearfix"><span className="chat-img pull-right">
+                                            <img src="http://placehold.it/50/FA6F57/fff&text=ME" alt="User Avatar" className="img-circle" />
+                                        </span>
+                                            <div className="chat-body clearfix">
+                                                <div className="header">
+                                                    <small className=" text-muted"><span className="glyphicon glyphicon-time"></span>15 mins ago</small>
+                                                    <strong className="pull-right primary-font">Bhaumik Patel</strong>
+                                                </div>
+                                                <p>
+                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
+                                                    dolor, quis ullamcorper ligula sodales.
+                                </p>
+                                            </div>
+                                        </li>
+                                        {rows}
+                                    </ul>
+                                </div>
+                                <div className="panel-footer">
+                                    <div className="input-group">
+                                        <input id="btn-input" name="inputMessage" type="text" className="form-control input-sm"
+                                            placeholder="Type your message here..." onChange={this.handleOnChange} />
+                                        <span className="input-group-btn">
+                                            <button className="btn btn-warning btn-sm" onClick={this.handleSendMessage} id="btn-chat">
+                                                Send</button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         )
@@ -65,7 +140,19 @@ class Chatroom extends Component {
 
 const ListRow = props => {
     return (
-        <li>{props.receivedMessage}</li>
+        <li className="left clearfix"><span className="chat-img pull-left">
+            <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" className="img-circle" />
+        </span>
+            <div className="chat-body clearfix">
+                <div className="header">
+                    <strong className="primary-font">Jack Sparrow</strong> <small className="pull-right text-muted">
+                        <span className="glyphicon glyphicon-time"></span>12 mins ago</small>
+                </div>
+                <p>
+                    {props.receivedMessage}
+                </p>
+            </div>
+        </li>
     )
 }
 
