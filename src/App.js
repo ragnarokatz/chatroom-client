@@ -1,6 +1,21 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+require("dotenv").config();
+
+import React from "react";
+import logo from "./logo.svg";
+import "./App.css";
+
+var socket = require("socket.io-client")(process.env.CHATROOM_SERVER);
+socket.on("connect", function() {
+  console.log("connected to server");
+});
+
+socket.on("event", function(data) {
+  console.log("event received");
+});
+
+socket.on("disconnect", function() {
+  console.log("disconnected from server");
+});
 
 function App() {
   return (
