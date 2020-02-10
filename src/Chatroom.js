@@ -5,12 +5,30 @@ class Chatroom extends Component {
     constructor(props) {
         super(props);
 
+        this.handleOnReceiveMessage = this.handleOnReceiveMessage.bind(this);
         this.handleOnChange = this.handleOnChange.bind(this);
         this.handleSendMessage = this.handleSendMessage.bind(this);
+
+        this.socket.on("connect", function () {
+            console.log("connected to server");
+        });
+
+        this.socket.on("message", this.handleOnReceiveMessage);
+
+        this.socket.on("disconnect", function () {
+            console.log("disconnected from server");
+        });
     }
 
     socket = require("socket.io-client")(process.env.REACT_APP_CHATROOM_SERVER_URL);
     state = { receivedMessages: [] }
+
+    handleOnReceiveMessage(message) {
+        console.log(`message received: ${message}`);
+        let messages = this.state.receivedMessages;
+        messages.push(message);
+        this.setState({ receivedMessages: messages });
+    }
 
     handleOnChange(e) {
         this.setState({ [e.target.name]: e.target.value });
@@ -19,24 +37,12 @@ class Chatroom extends Component {
     handleSendMessage(e) {
         e.preventDefault();
 
-        this.socket.emit('message', this.state.inputMessage);
+        if (this.state.inputMessage)
+            this.socket.emit('message', this.state.inputMessage);
     }
 
     componentDidMount() {
-        this.socket.on("connect", function () {
-            console.log("connected to server");
-        });
 
-        this.socket.on("message", function (message) {
-            console.log("message received");
-            let messages = this.state.receivedMessages;
-            messages.push(message);
-            this.setState({ receivedMessages: messages });
-        });
-
-        this.socket.on("disconnect", function () {
-            console.log("disconnected from server");
-        });
     }
 
     render() {
