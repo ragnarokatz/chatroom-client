@@ -1,31 +1,14 @@
-import React from "react";
-import logo from "./logo.svg";
+import React, { Component } from "react";
 import "./App.css";
+import Chatroom from "./Chatroom";
 
-var socket = require("socket.io-client")(process.env.REACT_APP_CHATROOM_SERVER_URL);
-socket.on("connect", function () {
-  console.log("connected to server");
-});
 
-socket.on("event", function (data) {
-  console.log("event received");
-});
-
-socket.on("disconnect", function () {
-  console.log("disconnected from server");
-});
-
-function App() {
-  return (
-    <div className="App">
-      <div>
-        <ul id="messages"></ul>
-        <form action="">
-          <input id="m" autoComplete="off" /><button>Send</button>
-        </form>
-      </div>
-    </div>
-  );
+class App extends Component {
+  render() {
+    return (
+      <Chatroom></Chatroom>
+    );
+  }
 }
 
 export default App;
