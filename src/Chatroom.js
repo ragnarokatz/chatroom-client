@@ -70,26 +70,22 @@ class Chatroom extends Component {
 
         return (
             <div class="App">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="panel panel-primary">
-                                <div class="panel-footer">
-                                    <div class="input-group">
-                                        <input id="btn-input" name="inputMessage" type="text" class="form-control input-sm" value={this.state.inputMessage}
-                                            placeholder="Type your message here..." onKeyDown={this.handleOnKeyDown} onChange={this.handleOnChange} />
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-warning btn-sm" onClick={this.handleOnSubmit} id="btn-chat">
-                                                Send</button>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="panel-body">
-                                    <ul class="chat">
-                                        {rows}
-                                    </ul>
-                                </div>
+                <div class="col-md-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-footer">
+                            <div class="input-group">
+                                <input id="btn-input" name="inputMessage" type="text" class="form-control input-lg" value={this.state.inputMessage}
+                                    placeholder="Type your message here..." onKeyDown={this.handleOnKeyDown} onChange={this.handleOnChange} />
+                                <span class="input-group-btn">
+                                    <button class="btn btn-warning btn-lg" onClick={this.handleOnSubmit} id="btn-chat">
+                                        Send</button>
+                                </span>
                             </div>
+                        </div>
+                        <div class="panel-body">
+                            <ul class="chat">
+                                {rows}
+                            </ul>
                         </div>
                     </div>
                 </div>
