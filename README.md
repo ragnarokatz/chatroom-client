@@ -8,6 +8,8 @@
 - `npm run start`
 - navigate to `localhost:3000` to view
 
+### Bootstrap template used
+-  https://bootsnipp.com/snippets/9njj
 
 ## README that came with Create React App
 
