@@ -26,8 +26,9 @@ class Chatroom extends Component {
 
     handleOnReceiveMessage(message) {
         console.log(`message received: ${message}`);
+        let obj = { message: message, orientation: 'left' }
         let messages = this.state.receivedMessages;
-        messages.unshift(message);
+        messages.unshift(obj);
         this.setState({ receivedMessages: messages });
     }
 
@@ -39,10 +40,14 @@ class Chatroom extends Component {
         console.log("invoke handle send message");
 
         e.preventDefault();
+        let message = this.state.inputMessage;
 
-        if (this.state.inputMessage.trim()) {
-            this.socket.emit('message', this.state.inputMessage);
-            this.setState({ inputMessage: '' });
+        if (message.trim()) {
+            this.socket.emit('message', message);
+            let obj = { message: message, orientation: 'right' }
+            let messages = this.state.receivedMessages;
+            messages.unshift(obj);
+            this.setState({ receivedMessages: messages, inputMessage: '' });
         }
     }
 
@@ -59,8 +64,8 @@ class Chatroom extends Component {
     }
 
     render() {
-        let rows = this.state.receivedMessages.map((receivedMessage, index) => {
-            return <ListRow receivedMessage={receivedMessage} key={index}></ListRow>
+        let rows = this.state.receivedMessages.map((obj, index) => {
+            return <ListRow message={obj.message} orientation={obj.orientation} key={index}></ListRow>
         })
 
         return (
@@ -82,65 +87,6 @@ class Chatroom extends Component {
                                 <div class="panel-body">
                                     <ul class="chat">
                                         {rows}
-                                        <li class="left clearfix"><span class="chat-img pull-left">
-                                            <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" />
-                                        </span>
-                                            <div class="chat-body clearfix">
-                                                <div class="header">
-                                                    <strong class="primary-font">Jack Sparrow</strong> <small class="pull-right text-muted">
-                                                        <span class="glyphicon glyphicon-time"></span>12 mins ago</small>
-                                                </div>
-                                                <p>
-                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
-                                                    dolor, quis ullamcorper ligula sodales. adfafdasfdas fasdfadfasfdsadfasdfsadfafaf
-                                                    asdfasfdasfasfasfsafasf
-                                                    afdasfdasfsfasfasfasf
-                                                    afdafdasdf
-                                </p>
-                                            </div>
-                                        </li>
-                                        <li class="right clearfix"><span class="chat-img pull-right">
-                                            <img src="http://placehold.it/50/FA6F57/fff&text=ME" alt="User Avatar" class="img-circle" />
-                                        </span>
-                                            <div class="chat-body clearfix">
-                                                <div class="header">
-                                                    <small class=" text-muted"><span class="glyphicon glyphicon-time"></span>13 mins ago</small>
-                                                    <strong class="pull-right primary-font">Bhaumik Patel</strong>
-                                                </div>
-                                                <p>
-                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
-                                                    dolor, quis ullamcorper ligula sodales.
-                                </p>
-                                            </div>
-                                        </li>
-                                        <li class="left clearfix"><span class="chat-img pull-left">
-                                            <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" />
-                                        </span>
-                                            <div class="chat-body clearfix">
-                                                <div class="header">
-                                                    <strong class="primary-font">Jack Sparrow</strong> <small class="pull-right text-muted">
-                                                        <span class="glyphicon glyphicon-time"></span>14 mins ago</small>
-                                                </div>
-                                                <p>
-                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
-                                                    dolor, quis ullamcorper ligula sodales.
-                                </p>
-                                            </div>
-                                        </li>
-                                        <li class="right clearfix"><span class="chat-img pull-right">
-                                            <img src="http://placehold.it/50/FA6F57/fff&text=ME" alt="User Avatar" class="img-circle" />
-                                        </span>
-                                            <div class="chat-body clearfix">
-                                                <div class="header">
-                                                    <small class=" text-muted"><span class="glyphicon glyphicon-time"></span>15 mins ago</small>
-                                                    <strong class="pull-right primary-font">Bhaumik Patel</strong>
-                                                </div>
-                                                <p>
-                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
-                                                    dolor, quis ullamcorper ligula sodales.
-                                </p>
-                                            </div>
-                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -153,20 +99,37 @@ class Chatroom extends Component {
 }
 
 const ListRow = props => {
+    const orientation = props.orientation;
     return (
-        <li class="left clearfix"><span class="chat-img pull-left">
-            <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" />
-        </span>
-            <div class="chat-body clearfix">
-                <div class="header">
-                    <strong class="primary-font">Jack Sparrow</strong> <small class="pull-right text-muted">
-                        <span class="glyphicon glyphicon-time"></span>12 mins ago</small>
+        orientation === 'left' ? (
+            <li class="left clearfix"><span class="chat-img pull-left">
+                <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" />
+            </span>
+                <div class="chat-body clearfix">
+                    <div class="header">
+                        <strong class="primary-font">Another User</strong> <small class="pull-right text-muted">
+                            <span class="glyphicon glyphicon-time"></span>12 mins ago</small>
+                    </div>
+                    <p>
+                        {props.message}
+                    </p>
                 </div>
-                <p>
-                    {props.receivedMessage}
-                </p>
-            </div>
-        </li>
+            </li>
+        ) : (
+                <li class="right clearfix"><span class="chat-img pull-right">
+                    <img src="http://placehold.it/50/FA6F57/fff&text=ME" alt="User Avatar" class="img-circle" />
+                </span>
+                    <div class="chat-body clearfix">
+                        <div class="header">
+                            <small class=" text-muted"><span class="glyphicon glyphicon-time"></span>15 mins ago</small>
+                            <strong class="pull-right primary-font">Me</strong>
+                        </div>
+                        <p>
+                            {props.message}
+                        </p>
+                    </div>
+                </li>
+            )
     )
 }
 
