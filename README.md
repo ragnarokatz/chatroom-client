@@ -1,7 +1,17 @@
+## README
+
+### Installation
+- `git clone` this repository
+- `npm install`
+- create a `.env` file in the root directory
+- add the following line in `.env` file: `REACT_APP_CHATROOM_SERVER_URL=https://chatroom-server-bwyao.herokuapp.com`, or point it to your own `chatroom-server` hosting.
+- `npm run start`
+- navigate to `localhost:3000` to view
+
+
+## README that came with Create React App
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
 In the project directory, you can run:
 
 ### `npm start`
