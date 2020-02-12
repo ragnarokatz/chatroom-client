@@ -36,14 +36,14 @@ class Chatroom extends Component {
     this.username = username;
   }
 
-  handleOnReceiveChatHistory(data) {
+  handleOnReceiveChatHistory(messages) {
     console.log("historical data received");
+    this.setState({ receivedMessages: messages });
   }
 
   handleOnReceiveMessage(obj) {
     console.log(`message received: ${obj.text}`);
 
-    obj.orientation = "left";
     let messages = this.state.receivedMessages;
     messages.unshift(obj);
     this.setState({ receivedMessages: messages });
@@ -64,8 +64,7 @@ class Chatroom extends Component {
       let obj = {
         sender: this.username,
         text: message,
-        time: new Date(),
-        orientation: "right"
+        time: new Date()
       };
       let messages = this.state.receivedMessages;
       messages.unshift(obj);
@@ -88,30 +87,31 @@ class Chatroom extends Component {
           sender={obj.sender}
           text={obj.text}
           time={obj.time}
+          username={this.username}
           key={index}
         ></ListRow>
       );
     });
 
     return (
-      <div class="App">
-        <div class="col-md-12">
-          <div class="panel panel-primary">
-            <div class="panel-footer">
-              <div class="input-group">
+      <div className="App">
+        <div className="col-md-12">
+          <div className="panel panel-primary">
+            <div className="panel-footer">
+              <div className="input-group">
                 <input
                   id="btn-input"
                   name="inputMessage"
                   type="text"
-                  class="form-control input-lg"
+                  className="form-control input-lg"
                   value={this.state.inputMessage}
                   placeholder="Type your message here..."
                   onKeyDown={this.handleOnKeyDown}
                   onChange={this.handleOnChange}
                 />
-                <span class="input-group-btn">
+                <span className="input-group-btn">
                   <button
-                    class="btn btn-warning btn-lg"
+                    className="btn btn-warning btn-lg"
                     onClick={this.handleOnSubmit}
                     id="btn-chat"
                   >
@@ -120,8 +120,8 @@ class Chatroom extends Component {
                 </span>
               </div>
             </div>
-            <div class="panel-body">
-              <ul class="chat">{rows}</ul>
+            <div className="panel-body">
+              <ul className="chat">{rows}</ul>
             </div>
           </div>
         </div>
@@ -131,40 +131,40 @@ class Chatroom extends Component {
 }
 
 const ListRow = props => {
-  return props.orientation === "left" ? (
-    <li class="left clearfix">
-      <span class="chat-img pull-left">
+  return props.sender !== props.username ? (
+    <li className="left clearfix">
+      <span className="chat-img pull-left">
         <img
           src="http://placehold.it/50/55C1E7/fff&text=U"
           alt="User Avatar"
-          class="img-circle"
+          className="img-circle"
         />
       </span>
-      <div class="chat-body clearfix">
-        <div class="header">
-          <strong class="primary-font">{props.sender}</strong>{" "}
-          <small class="pull-right text-muted">
-            <span class="glyphicon glyphicon-time"></span>12 mins ago
+      <div className="chat-body clearfix">
+        <div className="header">
+          <strong className="primary-font">{props.sender}</strong>{" "}
+          <small className="pull-right text-muted">
+            <span className="glyphicon glyphicon-time"></span>12 mins ago
           </small>
         </div>
         <p>{props.text}</p>
       </div>
     </li>
   ) : (
-    <li class="right clearfix">
-      <span class="chat-img pull-right">
+    <li className="right clearfix">
+      <span className="chat-img pull-right">
         <img
           src="http://placehold.it/50/FA6F57/fff&text=ME"
           alt="User Avatar"
-          class="img-circle"
+          className="img-circle"
         />
       </span>
-      <div class="chat-body clearfix">
-        <div class="header">
-          <small class=" text-muted">
-            <span class="glyphicon glyphicon-time"></span>15 mins ago
+      <div className="chat-body clearfix">
+        <div className="header">
+          <small className=" text-muted">
+            <span className="glyphicon glyphicon-time"></span>15 mins ago
           </small>
-          <strong class="pull-right primary-font">{props.sender}</strong>
+          <strong className="pull-right primary-font">{props.sender}</strong>
         </div>
         <p>{props.text}</p>
       </div>
