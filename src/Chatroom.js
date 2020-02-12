@@ -37,7 +37,7 @@ class Chatroom extends Component {
   }
 
   handleOnReceiveChatHistory(data) {
-    this.data = data;
+    console.log("historical data received");
   }
 
   handleOnReceiveMessage(obj) {
