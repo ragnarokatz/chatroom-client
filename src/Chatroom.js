@@ -1,9 +1,15 @@
 import React, { Component } from "react";
 import "./Chatroom.css";
+import Fingerprint2 from "fingerprintjs2";
 
 class Chatroom extends Component {
   constructor(props) {
     super(props);
+
+    this.handleOnFingerprint = this.handleOnFingerprint.bind(this);
+
+    var options = {};
+    Fingerprint2.get(options, this.handleOnFingerprint);
 
     this.handleOnReceiveUsername = this.handleOnReceiveUsername.bind(this);
     this.handleOnReceiveChatHistory = this.handleOnReceiveChatHistory.bind(
@@ -30,7 +36,17 @@ class Chatroom extends Component {
     process.env.REACT_APP_CHATROOM_SERVER_URL
   );
   state = { receivedMessages: [], inputMessage: "" };
-  username = "ME";
+  fingerprintId = "fingerprintId";
+  username = "username";
+
+  handleOnFingerprint(components) {
+    var values = components.map(function(component) {
+      return component.value;
+    });
+
+    this.fingerprintId = Fingerprint2.x64hash128(values.join(""), 27);
+    this.socket.emit("fingerprintId", this.fingerprintId);
+  }
 
   handleOnReceiveUsername(username) {
     this.username = username;
