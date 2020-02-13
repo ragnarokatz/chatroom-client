@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./Chatroom.css";
 import Fingerprint2 from "fingerprintjs2";
-import { formatDatetimeString } from "./utils.js";
+import { formatDatetimeString, generateImageUrl } from "./utils.js";
 
 class Chatroom extends Component {
   constructor(props) {
@@ -55,9 +55,6 @@ class Chatroom extends Component {
 
   handleOnReceiveChatHistory(messages) {
     console.log("historical data received");
-    console.log(messages[0].time)
-    console.log(typeof(messages[0].time))
-
     this.setState({ receivedMessages: messages });
   }
 
@@ -155,7 +152,7 @@ const ListRow = props => {
     <li className="left clearfix">
       <span className="chat-img pull-left">
         <img
-          src="http://placehold.it/50/55C1E7/fff&text=U"
+          src={generateImageUrl(props.sender)}
           alt="User Avatar"
           className="img-circle"
         />

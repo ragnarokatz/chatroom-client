@@ -1,5 +1,45 @@
 // utils.js
 
+const hexCodes = [
+  "0",
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
+  "A",
+  "B",
+  "C",
+  "D",
+  "E",
+  "F"
+];
+let userMapping = {};
+let userIndex = 0;
+
+function generateRandomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min) + min);
+}
+
+function generateIndex() {
+  userIndex++;
+  return userIndex;
+}
+
+function generateRandomColorHex() {
+  var hexCode = "";
+  var length = hexCodes.length;
+  for (var i = 0; i < 6; i++) {
+    var idx = generateRandomNumber(0, length);
+    hexCode = hexCode + hexCodes[idx];
+  }
+  return hexCode;
+}
+
 module.exports.formatDatetimeString = function(dateStr) {
   var date = new Date(dateStr);
   var now = new Date();
@@ -18,4 +58,17 @@ module.exports.formatDatetimeString = function(dateStr) {
   } else {
     return `${date.getYear()}-${date.getMonth()}-${date.getDate()}`;
   }
+};
+
+module.exports.generateImageUrl = function(username) {
+  var obj = {};
+  if (username in userMapping) {
+    obj = userMapping[username];
+  } else {
+    obj.colorHex = generateRandomColorHex();
+    obj.idx = generateIndex();
+    userMapping[username] = obj;
+  }
+
+  return `http://placehold.it/50/${obj.colorHex}/fff&text=U${obj.idx}`;
 };
