@@ -44,7 +44,7 @@ module.exports.formatDatetimeString = function(dateStr) {
   var date = new Date(dateStr);
   var now = new Date();
   if (
-    now.getYear() === date.getYear() &&
+    now.getFullYear() === date.getFullYear() &&
     now.getMonth() === date.getMonth() &&
     now.getDate() === date.getDate()
   ) {
@@ -56,7 +56,7 @@ module.exports.formatDatetimeString = function(dateStr) {
     minutes = minutes < 10 ? "0" + minutes : minutes;
     return `${hours}:${minutes}${ampm}`;
   } else {
-    return `${date.getYear()}-${date.getMonth()}-${date.getDate()}`;
+    return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
   }
 };
 
