@@ -70,5 +70,5 @@ module.exports.generateImageUrl = function(username) {
     userMapping[username] = obj;
   }
 
-  return `http://placehold.it/50/${obj.colorHex}/fff&text=U${obj.idx}`;
+  return `https://placehold.it/50/${obj.colorHex}/fff&text=U${obj.idx}`;
 };

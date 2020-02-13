@@ -165,14 +165,14 @@ const ListRow = props => {
             {formatDatetimeString(props.time)}
           </small>
         </div>
-        <p>{props.text}</p>
+        <p className="message-body">{props.text}</p>
       </div>
     </li>
   ) : (
     <li className="right clearfix">
       <span className="chat-img pull-right">
         <img
-          src="http://placehold.it/50/FA6F57/fff&text=ME"
+          src="https://placehold.it/50/FA6F57/fff&text=ME"
           alt="User Avatar"
           className="img-circle"
         />
@@ -185,7 +185,7 @@ const ListRow = props => {
           </small>
           <strong className="pull-right primary-font">{props.sender}</strong>
         </div>
-        <p>{props.text}</p>
+        <p className="message-body">{props.text}</p>
       </div>
     </li>
   );
