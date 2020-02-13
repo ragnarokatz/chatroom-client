@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./Chatroom.css";
 import Fingerprint2 from "fingerprintjs2";
+import { formatDatetimeString } from "./utils.js";
 
 class Chatroom extends Component {
   constructor(props) {
@@ -54,6 +55,9 @@ class Chatroom extends Component {
 
   handleOnReceiveChatHistory(messages) {
     console.log("historical data received");
+    console.log(messages[0].time)
+    console.log(typeof(messages[0].time))
+
     this.setState({ receivedMessages: messages });
   }
 
@@ -160,7 +164,8 @@ const ListRow = props => {
         <div className="header">
           <strong className="primary-font">{props.sender}</strong>{" "}
           <small className="pull-right text-muted">
-            <span className="glyphicon glyphicon-time"></span>12 mins ago
+            <span className="glyphicon glyphicon-time"></span>
+            {formatDatetimeString(props.time)}
           </small>
         </div>
         <p>{props.text}</p>
@@ -178,7 +183,8 @@ const ListRow = props => {
       <div className="chat-body clearfix">
         <div className="header">
           <small className=" text-muted">
-            <span className="glyphicon glyphicon-time"></span>15 mins ago
+            <span className="glyphicon glyphicon-time"></span>
+            {formatDatetimeString(props.time)}
           </small>
           <strong className="pull-right primary-font">{props.sender}</strong>
         </div>
