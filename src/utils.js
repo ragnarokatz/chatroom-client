@@ -1,5 +1,4 @@
 // utils.js
-
 const hexCodes = [
   "0",
   "1",

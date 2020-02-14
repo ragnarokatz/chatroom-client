@@ -1,53 +1,35 @@
 import React, { Component } from "react";
 import "./Chatroom.css";
-import Fingerprint2 from "fingerprintjs2";
 import { formatDatetimeString, generateImageUrl } from "./utils.js";
+import { registerEventListener, sendMessage } from "./socket.js";
+import { sendFingerprintId } from "./fingerprint.js";
 
 class Chatroom extends Component {
   constructor(props) {
     super(props);
-
-    this.handleOnFingerprint = this.handleOnFingerprint.bind(this);
-
-    var options = {};
-    Fingerprint2.get(options, this.handleOnFingerprint);
 
     this.handleOnReceiveUsername = this.handleOnReceiveUsername.bind(this);
     this.handleOnReceiveChatHistory = this.handleOnReceiveChatHistory.bind(
       this
     );
     this.handleOnReceiveMessage = this.handleOnReceiveMessage.bind(this);
-    this.handleOnChange = this.handleOnChange.bind(this);
-    this.handleOnSubmit = this.handleOnSubmit.bind(this);
+    this.handleOnChangeInput = this.handleOnChangeInput.bind(this);
+    this.handleOnSubmitInput = this.handleOnSubmitInput.bind(this);
     this.handleOnKeyDown = this.handleOnKeyDown.bind(this);
 
-    this.socket.on("message", this.handleOnReceiveMessage);
-    this.socket.on("history", this.handleOnReceiveChatHistory);
-    this.socket.on("username", this.handleOnReceiveUsername);
-
-    this.socket.on("disconnect", function() {
+    registerEventListener("message", this.handleOnReceiveMessage);
+    registerEventListener("history", this.handleOnReceiveChatHistory);
+    registerEventListener("username", this.handleOnReceiveUsername);
+    registerEventListener("disconnect", function() {
       console.log("disconnected from server");
     });
-    this.socket.on("connect", function() {
+    registerEventListener("connect", function() {
       console.log("connected to server");
     });
   }
 
-  socket = require("socket.io-client")(
-    process.env.REACT_APP_CHATROOM_SERVER_URL
-  );
   state = { receivedMessages: [], inputMessage: "" };
-  fingerprintId = "fingerprintId";
   username = "username";
-
-  handleOnFingerprint(components) {
-    var values = components.map(function(component) {
-      return component.value;
-    });
-
-    this.fingerprintId = Fingerprint2.x64hash128(values.join(""), 27);
-    this.socket.emit("fingerprintId", this.fingerprintId);
-  }
 
   handleOnReceiveUsername(username) {
     this.username = username;
@@ -66,18 +48,18 @@ class Chatroom extends Component {
     this.setState({ receivedMessages: messages });
   }
 
-  handleOnChange(e) {
+  handleOnChangeInput(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
 
-  handleOnSubmit(e) {
+  handleOnSubmitInput(e) {
     console.log("invoke handle send message");
 
     e.preventDefault();
     let message = this.state.inputMessage;
 
     if (message.trim()) {
-      this.socket.emit("message", message);
+      sendMessage(message);
       let obj = {
         sender: this.username,
         text: message,
@@ -93,8 +75,12 @@ class Chatroom extends Component {
     if (e.keyCode === 13) {
       e.preventDefault();
       e.stopPropagation();
-      this.handleOnSubmit(e);
+      this.handleOnSubmitInput(e);
     }
+  }
+
+  componentDidMount() {
+    sendFingerprintId();
   }
 
   render() {
@@ -124,12 +110,12 @@ class Chatroom extends Component {
                   value={this.state.inputMessage}
                   placeholder="Type your message here..."
                   onKeyDown={this.handleOnKeyDown}
-                  onChange={this.handleOnChange}
+                  onChange={this.handleOnChangeInput}
                 />
                 <span className="input-group-btn">
                   <button
                     className="btn btn-warning btn-lg"
-                    onClick={this.handleOnSubmit}
+                    onClick={this.handleOnSubmitInput}
                     id="btn-chat"
                   >
                     Send
