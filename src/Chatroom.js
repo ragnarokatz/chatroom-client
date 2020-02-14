@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import "./Chatroom.css";
 import { formatDatetimeString, generateImageUrl } from "./utils.js";
-import { initializeSocket, registerEventListener, sendMessage } from "./socket.js";
+import {
+  initializeSocket,
+  registerEventListener,
+  sendMessage
+} from "./socket.js";
 import { getFingerprintId } from "./fingerprint.js";
 
 class Chatroom extends Component {
@@ -21,10 +25,10 @@ class Chatroom extends Component {
     registerEventListener("message", this.handleOnReceiveMessage);
     registerEventListener("history", this.handleOnReceiveChatHistory);
     registerEventListener("username", this.handleOnReceiveUsername);
-    registerEventListener("disconnect", function () {
+    registerEventListener("disconnect", function() {
       console.log("disconnected from server");
     });
-    registerEventListener("connect", function () {
+    registerEventListener("connect", function() {
       console.log("connected to server");
     });
   }
@@ -156,26 +160,26 @@ const ListRow = props => {
       </div>
     </li>
   ) : (
-      <li className="right clearfix">
-        <span className="chat-img pull-right">
-          <img
-            src="https://placehold.it/50/FA6F57/fff&text=ME"
-            alt="User Avatar"
-            className="img-circle"
-          />
-        </span>
-        <div className="chat-body clearfix">
-          <div className="header">
-            <small className=" text-muted">
-              <span className="glyphicon glyphicon-time"></span>
-              {formatDatetimeString(props.time)}
-            </small>
-            <strong className="pull-right primary-font">{props.sender}</strong>
-          </div>
-          <p className="message-body">{props.text}</p>
+    <li className="right clearfix">
+      <span className="chat-img pull-right">
+        <img
+          src="https://placehold.it/50/FA6F57/fff&text=ME"
+          alt="User Avatar"
+          className="img-circle"
+        />
+      </span>
+      <div className="chat-body clearfix">
+        <div className="header">
+          <small className=" text-muted">
+            <span className="glyphicon glyphicon-time"></span>
+            {formatDatetimeString(props.time)}
+          </small>
+          <strong className="pull-right primary-font">{props.sender}</strong>
         </div>
-      </li>
-    );
+        <p className="message-body">{props.text}</p>
+      </div>
+    </li>
+  );
 };
 
 export default Chatroom;
