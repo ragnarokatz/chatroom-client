@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Linkify from "react-linkify";
 import "./Chatroom.css";
 import { formatDatetimeString, generateImageUrl } from "./utils.js";
 import {
@@ -156,7 +157,9 @@ const ListRow = props => {
             {formatDatetimeString(props.time)}
           </small>
         </div>
-        <p className="message-body">{props.text}</p>
+        <p className="message-body">
+          <Linkify>{props.text}</Linkify>
+        </p>
       </div>
     </li>
   ) : (
@@ -176,7 +179,9 @@ const ListRow = props => {
           </small>
           <strong className="pull-right primary-font">{props.sender}</strong>
         </div>
-        <p className="message-body">{props.text}</p>
+        <p className="message-body">
+          <Linkify>{props.text}</Linkify>
+        </p>
       </div>
     </li>
   );
