@@ -29,7 +29,7 @@ class Chatroom extends Component {
   }
 
   state = { receivedMessages: [], inputMessage: "" };
-  username = "username";
+  username = "ME";
 
   handleOnReceiveUsername(username) {
     this.username = username;
