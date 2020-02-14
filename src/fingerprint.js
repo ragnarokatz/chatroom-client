@@ -7,11 +7,11 @@ function handleOnGetComponents(components) {
     return component.value;
   });
 
-  fingerprintId = Fingerprint2.x64hash128(values.join(""), 27);
+  var fingerprintId = Fingerprint2.x64hash128(values.join(""), 27);
   sendFingerprintId(fingerprintId);
 }
 
-module.exports.sendFingerprintId = function() {
+function getFingerprintId() {
   var options = {
     fonts: { extendedJsFonts: true },
     excludes: { userAgent: true },
@@ -28,4 +28,6 @@ module.exports.sendFingerprintId = function() {
       Fingerprint2.get(options, handleOnGetComponents);
     }, 500);
   }
-};
+}
+
+export { getFingerprintId };

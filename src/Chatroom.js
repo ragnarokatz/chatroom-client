@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./Chatroom.css";
 import { formatDatetimeString, generateImageUrl } from "./utils.js";
 import { registerEventListener, sendMessage } from "./socket.js";
-import { sendFingerprintId } from "./fingerprint.js";
+import { getFingerprintId } from "./fingerprint.js";
 
 class Chatroom extends Component {
   constructor(props) {
@@ -80,7 +80,7 @@ class Chatroom extends Component {
   }
 
   componentDidMount() {
-    sendFingerprintId();
+    getFingerprintId();
   }
 
   render() {
